@@ -1,0 +1,115 @@
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    position: fixed;
+    left: 0;
+    padding: 25px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 18px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 12px;
+    color: #444;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    background: #e7e9ff;
+    color: #4154f1;
+}
+/* Main Content Area */
+body {
+    background: #f4f6ff;
+    margin-left: 260px;
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Search Bar & Write Blog Button */
+#searchInput {
+    border-radius: 6px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
+}
+
+.input-group-text {
+    border-radius: 6px 0 0 6px;
+}
+
+/* Blog Cards */
+.dashboard-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 50, 0.1);
+    transition: 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card img {
+    border-radius: 10px;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.dashboard-card h5 {
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.dashboard-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.dashboard-card button {
+    margin-top: auto;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 14px rgba(0, 0, 50, 0.18);
+}
+
+/* Grid Fix */
+.blog-card {
+    display: flex;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+}change this css into pervious like css 

@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f8f9fa;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    position: fixed;
+    left: 0;
+    padding: 25px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 18px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    color: #444;
+    border-radius: 8px;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    background: #e7e9ff;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 220px;
+    padding: 30px;
+}
+
+/* HEADER AVATAR */
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* DASHBOARD CARDS */
+.dashboard-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 350px;
+    transition: transform 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+/* BADGES CARDS */
+.info-card {
+    background: #f1f3ff;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-icon {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.streak-count h2 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.days span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* LEADERBOARD */
+.list-group-item {
+    border: none;
+    background: #f8f9fa;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+/* BUTTONS */
+.btn-sm {
+    padding: 5px 15px;
+}

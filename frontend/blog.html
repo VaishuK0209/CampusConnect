@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogs - CampusConnect</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/blog.css">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+        <h2 class="logo">CampusConnect</h2>
+        <ul class="nav-links">
+            <li><a href="home2.html"><i class="bi bi-house-door"></i> Home</a></li>
+            <li><a class="active" href="blog.html"><i class="bi bi-journal-text"></i> Blogs</a></li>
+            <li><a href="challenges.html"><i class="bi bi-flag"></i> Challenges</a></li>
+            <li><a href="leaderboard.html"><i class="bi bi-trophy"></i> Leaderboard</a></li>
+            <li><a href="resources.html"><i class="bi bi-book"></i> Resources</a></li>
+            <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
+    </nav>
+
+    <!-- TOP BAR: Search + Write Blog -->
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+            
+            <!-- Search Bar -->
+            <div class="input-group w-50">
+                <span class="input-group-text bg-primary text-white">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" class="form-control" id="searchInput" placeholder="Search blogs...">
+            </div>
+
+            <!-- Write a Blog Button -->
+            <a href="write-blog.html" class="btn btn-success">
+                <i class="bi bi-pencil-square"></i> Write a Blog
+            </a>
+        </div>
+    </div>
+
+    <!-- BLOG GRID -->
+    <div class="container mt-4">
+        <div class="row g-3" id="blogContainer">
+
+            <!-- Blog Post 1 -->
+            <div class="col-md-4 d-flex blog-card">
+                <div class="dashboard-card">
+                    <img src="https://images.unsplash.com/photo-1612832021614-7a68e6e4e2ee?crop=entropy&cs=tinysrgb&fit=max&h=200&w=400" class="img-fluid rounded mb-3" alt="Blog 1">
+                    <h5>CampusConnect Launch</h5>
+                    <p>Learn how CampusConnect was launched to bring JIT students together, share events, projects, and updates on a single platform.</p>
+                    <button class="btn btn-primary btn-sm">Read More</button>
+                </div>
+            </div>
+
+            <!-- Blog Post 2 -->
+            <div class="col-md-4 d-flex blog-card">
+                <div class="dashboard-card">
+                    <img src="https://images.unsplash.com/photo-1590608897129-79fbc60d2b1c?crop=entropy&cs=tinysrgb&fit=max&h=200&w=400" class="img-fluid rounded mb-3" alt="Blog 2">
+                    <h5>Hackathon 2025 Highlights</h5>
+                    <p>Catch up on JIT Borawan's latest hackathon! Explore project ideas, winners, and insights from participants.</p>
+                    <button class="btn btn-primary btn-sm">Read More</button>
+                </div>
+            </div>
+
+            <!-- Blog Post 3 -->
+            <div class="col-md-4 d-flex blog-card">
+                <div class="dashboard-card">
+                    <img src="https://images.unsplash.com/photo-1581091215368-4e8a2f9c2c7e?crop=entropy&cs=tinysrgb&fit=max&h=200&w=400" class="img-fluid rounded mb-3" alt="Blog 3">
+                    <h5>Web Development Workshop</h5>
+                    <p>JIT Borawan hosted a web dev workshop covering HTML, CSS, JS, and MERN stack. Learn tips shared by instructors.</p>
+                    <button class="btn btn-primary btn-sm">Read More</button>
+                </div>
+            </div>
+
+            <!-- Blog Post 4 -->
+            <div class="col-md-4 d-flex blog-card">
+                <div class="dashboard-card">
+                    <img src="https://images.unsplash.com/photo-1554774853-9a3c6b2c9d54?crop=entropy&cs=tinysrgb&fit=max&h=200&w=400" class="img-fluid rounded mb-3" alt="Blog 4">
+                    <h5>AI & Robotics Club Projects</h5>
+                    <p>Explore the latest AI and Robotics projects by JIT students, including automated bots and AI-based tools.</p>
+                    <button class="btn btn-primary btn-sm">Read More</button>
+                </div>
+            </div>
+
+            <!-- Blog Post 5 -->
+            <div class="col-md-4 d-flex blog-card">
+                <div class="dashboard-card">
+                    <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?crop=entropy&cs=tinysrgb&fit=max&h=200&w=400" class="img-fluid rounded mb-3" alt="Blog 5">
+                    <h5>Internship Opportunities</h5>
+                    <p>Get updates on summer internships and placements shared by the JIT Training & Placement cell for students.</p>
+                    <button class="btn btn-primary btn-sm">Read More</button>
+                </div>
+            </div>
+
+            <!-- Blog Post 6 -->
+            <div class="col-md-4 d-flex blog-card">
+                <div class="dashboard-card">
+                    <img src="https://images.unsplash.com/photo-1581091012184-8b2c593f7ef3?crop=entropy&cs=tinysrgb&fit=max&h=200&w=400" class="img-fluid rounded mb-3" alt="Blog 6">
+                    <h5>Cybersecurity Awareness</h5>
+                    <p>JIT Borawan conducts sessions to educate students about online security, safe coding practices, and ethical hacking basics.</p>
+                    <button class="btn btn-primary btn-sm">Read More</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<script src="js/blog.js"></script>
+
+<!-- Search Filter Script -->
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    searchInput.addEventListener('keyup', function() {
+        const value = this.value.toLowerCase();
+
+        blogCards.forEach(card => {
+            const title = card.querySelector('h5').innerText.toLowerCase();
+            const text = card.querySelector('p').innerText.toLowerCase();
+
+            if (title.includes(value) || text.includes(value)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

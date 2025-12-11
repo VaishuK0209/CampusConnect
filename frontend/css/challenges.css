@@ -1,0 +1,149 @@
+/* GENERAL */
+body {
+    margin: 0;
+    padding: 0;
+    background: #f3f5fc;
+    font-family: "Poppins", sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    position: fixed;
+    left: 0;
+    padding: 25px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-bottom: 18px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 12px;
+    color: #444;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    background: #e7e9ff;
+    color: #4154f1;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 240px;
+    padding: 40px 20px;
+}
+
+/* SECTION HEADINGS */
+h3 {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* CARDS */
+.dashboard-card {
+    background: #ffffff;
+    padding: 20px 15px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* CARD ICONS */
+.card-icon {
+    font-size: 40px;
+    color: #4154f1;
+    margin-bottom: 15px;
+}
+
+/* CARD CONTENT */
+.dashboard-card h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.dashboard-card p {
+    font-size: 14px;
+    color: #555;
+    flex-grow: 1;
+}
+
+/* BUTTONS */
+.dashboard-card .btn {
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    padding: 5px 12px;
+}
+
+/* RESPONSIVE CARDS EQUAL HEIGHT */
+.row.d-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row.d-flex > .col-md-4,
+.row.d-flex > .col-md-3 {
+    display: flex;
+}
+
+.row.d-flex > .col-md-4 .dashboard-card,
+.row.d-flex > .col-md-3 .dashboard-card {
+    flex: 1 1 auto;
+}
+
+/* CHALLENGES & GAMES */
+.challenges-section .dashboard-card .card-icon {
+    color: #4154f1;
+}
+
+.games-section .dashboard-card .card-icon {
+    color: #28a745;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        padding: 15px;
+    }
+}
