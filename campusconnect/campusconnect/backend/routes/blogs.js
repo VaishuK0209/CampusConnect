@@ -86,6 +86,8 @@ router.post('/blogs', authMiddleware, async (req, res) => {
       }
     } catch (e) { /* ignore */ }
     db.saveFileDB(store);
+    // update cached leaderboard for file DB
+    try { db.computeAndSaveLeaderboard(); } catch (e) { /* ignore */ }
     res.json(blog);
   }
 });
@@ -209,6 +211,8 @@ router.put('/blogs/:id', authMiddleware, async (req, res) => {
     if (typeof req.body.essential === 'boolean') store.blogs[idx].essential = req.body.essential;
     if (typeof req.body.mood === 'string') store.blogs[idx].mood = req.body.mood;
     db.saveFileDB(store);
+    // update cached leaderboard for file DB
+    try { db.computeAndSaveLeaderboard(); } catch (e) { /* ignore */ }
     res.json(store.blogs[idx]);
   }
 });

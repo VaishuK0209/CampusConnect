@@ -1,5 +1,13 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "05a5d617-f76d-47b1-9093-ae6e565e84fa",
+      "name": "v",
+      "email": "v@gmail.com",
+      "passwordHash": "$2b$10$rodYFeqzPunKvFwcxEb/YujBOgrg2lAafGLguUQ3b6wO3HtTkSuAq",
+      "createdAt": "2025-12-15T09:29:21.940Z"
+    }
+  ],
   "blogs": [],
   "challenges": []
 }

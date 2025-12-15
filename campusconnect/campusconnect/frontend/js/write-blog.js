@@ -1,19 +1,20 @@
 const API_BASE = (window.API_BASE || 'http://localhost:4000') + '/api';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const token = localStorage.getItem('cc_token');
-  if (!token) {
-    // protect page — redirect to login
-    window.location.href = 'login.html';
-    return;
-  }
-
+  // allow page to load for drafting and AI tools even when not logged in
   const form = document.getElementById('writeBlogForm');
   const err = document.getElementById('wbError');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     err.style.display = 'none';
+    const token = localStorage.getItem('cc_token');
+    if (!token) {
+      err.textContent = 'You must be logged in to publish. Redirecting to login...';
+      err.style.display = 'block';
+      setTimeout(() => window.location.href = 'login.html', 900);
+      return;
+    }
     const title = document.getElementById('blogTitle').value.trim();
     const content = document.getElementById('blogContent').value.trim();
     if (!title || !content) {

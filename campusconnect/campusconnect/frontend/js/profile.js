@@ -1,6 +1,48 @@
 const API_BASE = (window.API_BASE || 'http://localhost:4000') + '/api';
 
+function escapeHtml(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
 async function getProfile() {
+  // Determine if we're viewing a specific user's profile via query or hash
+  const urlParams = new URLSearchParams(window.location.search || '');
+  const targetId = urlParams.get('id') || (location.hash ? location.hash.replace('#','') : null);
+  window.viewingProfileUserId = targetId || null;
+
+  // If a targetId is present, fetch public profile; otherwise fetch logged-in user's profile
+  if (targetId) {
+    try {
+      const res = await fetch(`${API_BASE.replace(/\/api$/, '')}/api/users/${encodeURIComponent(targetId)}`);
+      if (!res.ok) throw new Error('Not found');
+      const data = await res.json();
+      const user = data.user;
+      if (user) {
+        const el = document.getElementById('profileName');
+        if (el) el.textContent = user.name ? ` — ${user.name}` : '';
+        const bioText = document.getElementById('bioText');
+        const bioInput = document.getElementById('bioInput');
+        if (bioText) bioText.textContent = user.bio || 'This user has not added a bio yet.';
+        if (bioInput) bioInput.value = user.bio || '';
+        window.cc_user_profile = user;
+        // when viewing another user's profile disable editing controls
+        const editBtn = document.getElementById('editBioBtn');
+        const saveBtn = document.getElementById('saveBioBtn');
+        const cancelBtn = document.getElementById('cancelBioBtn');
+        const bioEditor = document.getElementById('bioEditor');
+        if (editBtn) editBtn.style.display = 'none';
+        if (saveBtn) saveBtn.style.display = 'none';
+        if (cancelBtn) cancelBtn.style.display = 'none';
+        if (bioEditor) bioEditor.style.display = 'none';
+        updateProfileCompletion(user, []);
+      }
+    } catch (err) {
+      console.error(err);
+      const el = document.getElementById('profileName'); if (el) el.textContent = '';
+      const bioText = document.getElementById('bioText'); if (bioText) bioText.textContent = 'User not found.';
+    }
+    return;
+  }
+
+  // No targetId: load authenticated user's profile
   const token = localStorage.getItem('cc_token');
   if (!token) { window.location.href = 'login.html'; return; }
   try {
@@ -29,15 +71,32 @@ async function getProfile() {
 
 async function loadMyPosts() {
   const token = localStorage.getItem('cc_token');
-  if (!token) return;
+  // if viewing another user's profile, filter blogs by that user id
+  const viewingUserId = window.viewingProfileUserId || null;
   try {
-    const res = await fetch(`${API_BASE}/myblogs`, { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) return;
-    const data = await res.json();
+    let data = [];
+    if (viewingUserId) {
+      // fetch all blogs and filter client-side
+      const resAll = await fetch(`${API_BASE.replace(/\/api$/, '')}/api/blogs`);
+      if (resAll.ok) {
+        const all = await resAll.json();
+        data = (all || []).filter(b => (b.authorId || b.author) === viewingUserId);
+      }
+    } else {
+      if (!token) return;
+      const res = await fetch(`${API_BASE}/myblogs`, { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) return;
+      data = await res.json();
+    }
     const container = document.getElementById('myPostsList');
     if (!container) return;
     container.innerHTML = '';
-    if (!data || !data.length) { container.innerHTML = '<p class="text-muted">You have not posted any blogs yet.</p>'; updateProfileCompletion(window.cc_user_profile || null, []); updateStreak(0); return; }
+    if (!data || !data.length) {
+      container.innerHTML = `<p class="text-muted">${viewingUserId ? 'This user has not posted any blogs yet.' : 'You have not posted any blogs yet.'}</p>`;
+      updateProfileCompletion(window.cc_user_profile || null, []);
+      updateStreak(0);
+      return;
+    }
     const ul = document.createElement('ul'); ul.className = 'list-group';
     data.forEach(b => {
       const li = document.createElement('li'); li.className = 'list-group-item d-flex justify-content-between align-items-center';
@@ -86,6 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
   getProfile();
   // load user's posts
   loadMyPosts();
+  // render leaderboard
+  renderLeaderboard();
   // refresh my posts after blogs change elsewhere
   document.addEventListener('cc:blogs-loaded', loadMyPosts);
   const logout = document.getElementById('logoutBtn');
@@ -246,5 +307,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // initialize counter on load
   updateCounter();
 });
+
+// Leaderboard by ethical score = words by user / total words
+async function renderLeaderboard() {
+  try {
+    const res = await fetch(`${API_BASE.replace(/\/api$/, '')}/api/blogs`);
+    if (!res.ok) return;
+    const blogs = await res.json();
+    // total words across all blogs
+    let totalWords = 0;
+    const counts = {}; // key -> { words, name }
+    for (const b of (blogs || [])) {
+      const text = (b.content || '').trim();
+      const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      totalWords += words;
+      const authorId = b.authorId || b.author || (b.authorName || 'unknown');
+      if (!counts[authorId]) counts[authorId] = { words: 0, name: b.authorName || authorId };
+      counts[authorId].words += words;
+    }
+    const entries = Object.keys(counts).map(k => ({ id: k, name: counts[k].name, words: counts[k].words, score: totalWords > 0 ? counts[k].words / totalWords : 0 }));
+    entries.sort((a,b) => b.score - a.score);
+    const list = document.getElementById('leaderboardList');
+    if (!list) return;
+    list.innerHTML = '';
+    entries.slice(0, 10).forEach((e, idx) => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item d-flex justify-content-between align-items-center';
+      const pts = Math.round(e.score * 1000); // show scaled score
+      li.innerHTML = `${escapeHtml(e.name || e.id)} <span>${pts} pts</span>`;
+      list.appendChild(li);
+    });
+  } catch (err) { console.error('Leaderboard error', err); }
+}
 
 

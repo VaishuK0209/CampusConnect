@@ -8,6 +8,8 @@ const authRoutes = require('./routes/auth');
 const blogsRoutes = require('./routes/blogs');
 const challengesRoutes = require('./routes/challenges');
 const notificationsRoutes = require('./routes/notifications');
+const leaderboardRoutes = require('./routes/leaderboard');
+const aiRoutes = require('./routes/ai');
 
 const app = express();
 app.use(cors());
@@ -18,6 +20,8 @@ app.use('/api', authRoutes);
 app.use('/api', blogsRoutes);
 app.use('/api', challengesRoutes);
 app.use('/api', notificationsRoutes);
+app.use('/api', leaderboardRoutes);
+app.use('/api', aiRoutes);
 
 // Health
 app.get('/api/health', (req, res) => res.json({ ok: true }));

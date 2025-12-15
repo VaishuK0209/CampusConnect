@@ -92,6 +92,25 @@ router.get('/profile', authMiddleware, async (req, res) => {
   }
 });
 
+// Public: get any user's public profile by id
+router.get('/users/:id', async (req, res) => {
+  const id = req.params.id;
+  if (db.isMongo()) {
+    const { User } = db.getModels();
+    try {
+      if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ error: 'User not found' });
+      const user = await User.findById(id).lean();
+      if (!user) return res.status(404).json({ error: 'User not found' });
+      return res.json({ user: { id: user._id.toString(), name: user.name, bio: user.bio || '', createdAt: user.createdAt } });
+    } catch (err) { console.error(err); return res.status(500).json({ error: 'Server error' }); }
+  } else {
+    const store = db.loadFileDB();
+    const user = (store.users || []).find(u => u.id === id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    return res.json({ user: { id: user.id, name: user.name, bio: user.bio || '', createdAt: user.createdAt } });
+  }
+});
+
 // Get bookmarks
 router.get('/bookmarks', authMiddleware, async (req, res) => {
   if (db.isMongo()) {

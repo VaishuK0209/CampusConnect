@@ -36,7 +36,7 @@
       <div class="profile-section">
         <div class="profile-logo-card text-center">
           <img src="https://i.ibb.co/5T0QzBk/profile-avatar.png" alt="Profile Avatar" class="profile-avatar">
-          <h4 class="profile-name mt-2">Shraddha Gupta</h4>
+          <h4 id="profileName" class="profile-name mt-2"></h4>
           <p id="bioText" class="profile-bio">JIT Student</p>
           <button id="editBioBtn" class="btn btn-outline-primary btn-sm mt-2">Edit Bio</button>
           <div id="bioEditor" class="mt-2" style="display:none">
@@ -96,11 +96,8 @@
         <div class="dashboard-card mb-3">
           <img src="https://i.ibb.co/Tr9KkRJ/leaderboard.png" alt="Leaderboard Image" class="mb-2" style="width:100%">
           <h5>Leaderboard</h5>
-          <ol class="list-group list-group-numbered mt-2">
-            <li class="list-group-item d-flex justify-content-between align-items-center">Alice <span>980 pts</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Bob <span>870 pts</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Charlie <span>820 pts</span></li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">Shraddha <span>800 pts</span></li>
+          <ol id="leaderboardList" class="list-group list-group-numbered mt-2">
+            <!-- Leaderboard will be populated dynamically based on ethical score -->
           </ol>
         </div>
 
