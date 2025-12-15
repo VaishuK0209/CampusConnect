@@ -1,0 +1,169 @@
+/* ================= VARIABLES ================= */
+:root {
+  /* LIGHT MODE VARIABLES */
+  --bg: #f4f6fb;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --hover-bg: rgba(76,111,255,0.08);
+  --primary: #4c6fff;
+  --primary-2: #6a7bff;
+  --sidebar-width: 240px;
+}
+
+/* DARK MODE VARIABLES */
+body.dark-mode {
+  --bg: #1f2937;
+  --card-bg: #374151;
+  --border: #4b5563;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+  --hover-bg: rgba(108, 99, 255, 0.2);
+  --primary: #6a7bff;
+  --primary-2: #4c6fff;
+}
+
+/* ================= BASE ================= */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--card-bg);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  padding: 25px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: black;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-bottom: 16px;
+}
+
+.nav-links a {
+  display: flex;
+  gap: 10px;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background: var(--hover-bg);
+  color: black;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 40px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* PROFILE CARDS */
+.profile-logo-card,
+.dashboard-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-logo-card {
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+}
+
+/* STREAK & INFO */
+.streak-number {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.info-card {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+/* BIO */
+#bioInput {
+  resize: none;
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+/* DAYS OF WEEK */
+.days span {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* PROGRESS BAR */
+.progress {
+  height: 12px;
+  border-radius: 10px;
+  background:var(--hover-bg)
+  margin-top: 5px;
+  transition: background 0.3s ease;
+}
+
+.progress-bar {
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  transition: background 0.3s ease;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .d-flex.flex-column.flex-lg-row {
+    flex-direction: column !important;
+  }
+
+  .dashboard-section {
+    width: 100%;
+  }
+}

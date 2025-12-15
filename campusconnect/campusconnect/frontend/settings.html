@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - CampusConnect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/theme.css">
+  <style>
+    .settings-card { max-width: 760px; margin: 48px auto; }
+  </style>
+</head>
+<body>
+
+  <div class="container settings-card">
+    <div class="card p-4">
+      <h3 class="mb-3">Settings</h3>
+
+      <div class="mb-4 d-flex align-items-center justify-content-between">
+        <div>
+          <h5 class="mb-1">Appearance</h5>
+          <p class="text-muted mb-0">Choose light or dark mode for the interface.</p>
+        </div>
+        <div>
+          <label class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="themeSwitch" data-theme-toggle />
+            <span class="form-check-label" id="themeLabel">Dark mode</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-4 d-flex align-items-center justify-content-between">
+        <div>
+          <h5 class="mb-1">Bookmarks</h5>
+          <p class="text-muted mb-0">Enable or disable the bookmarking feature across the site.</p>
+        </div>
+        <div>
+          <label class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="bookmarkSwitch" />
+            <span class="form-check-label" id="bookmarkLabel">Enabled</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h5 class="mb-2">Bookmarks</h5>
+        <p class="text-muted mb-2">Your saved bookmarks — quick access to posts or pages you saved.</p>
+        <div id="bookmarksList"></div>
+      </div>
+
+      <a href="profile.html" class="btn btn-outline-secondary">Back to Profile</a>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/scroll-top.js"></script>
+  <script src="js/bookmarks.js"></script>
+  <script>
+    // sync label text based on checkbox state
+    document.addEventListener('DOMContentLoaded', () => {
+      const sw = document.getElementById('themeSwitch');
+      const lbl = document.getElementById('themeLabel');
+      if (!sw) return;
+      function updateLabel() { lbl.textContent = sw.checked ? 'Dark mode' : 'Light mode'; }
+      sw.addEventListener('change', updateLabel);
+      updateLabel();
+    });
+    // bookmarks switch: load current setting and save on change
+    document.addEventListener('DOMContentLoaded', async () => {
+      const bm = document.getElementById('bookmarkSwitch');
+      const lbl = document.getElementById('bookmarkLabel');
+      if (!bm) return;
+      // load profile to get current setting
+      try {
+        const token = localStorage.getItem('cc_token');
+        if (!token) { bm.checked = true; lbl.textContent = 'Enabled'; return; }
+        const res = await fetch((window.API_BASE || 'http://localhost:4000') + '/api/profile', { headers: { Authorization: `Bearer ${token}` } });
+        if (res.ok) {
+          const data = await res.json();
+          const enabled = data.user && typeof data.user.bookmarksEnabled === 'boolean' ? data.user.bookmarksEnabled : true;
+          bm.checked = enabled;
+          lbl.textContent = enabled ? 'Enabled' : 'Disabled';
+        }
+      } catch (e) { /* ignore */ }
+
+      bm.addEventListener('change', async () => {
+        const enabled = bm.checked;
+        lbl.textContent = enabled ? 'Enabled' : 'Disabled';
+        bm.disabled = true;
+        try {
+          const token = localStorage.getItem('cc_token');
+          if (!token) { window.location.href = 'login.html'; return; }
+          const res = await fetch((window.API_BASE || 'http://localhost:4000') + '/api/profile', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ bookmarksEnabled: enabled })
+          });
+          if (!res.ok) throw new Error('Could not update setting');
+          // update UI: show/hide bookmark UI across page
+          toggleBookmarkUI(enabled);
+          showToast('Bookmarks ' + (enabled ? 'enabled' : 'disabled'), 'success');
+          try { window.ccBookmarks && window.ccBookmarks.updateBanner && window.ccBookmarks.updateBanner(enabled); } catch (e) {}
+        } catch (err) {
+          console.error(err);
+          showToast('Could not update bookmarks setting', 'danger');
+          bm.checked = !enabled; // revert
+          lbl.textContent = bm.checked ? 'Enabled' : 'Disabled';
+        } finally { bm.disabled = false; }
+      });
+    });
+
+    // helper used here and by bookmarks.js
+    function toggleBookmarkUI(enabled) {
+      const els = document.querySelectorAll('.bookmark-btn');
+      els.forEach(el => { el.style.display = enabled ? '' : 'none'; });
+      const bList = document.getElementById('bookmarksList');
+      if (bList) bList.style.display = enabled ? '' : 'none';
+      const pb = document.getElementById('profileBookmarks');
+      if (pb) pb.style.display = enabled ? '' : 'none';
+    }
+  </script>
+</body>
+</html>

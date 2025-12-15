@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - CampusConnect</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/profile.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+      <h2 class="logo">CampusConnect</h2>
+      <ul class="nav-links">
+        <li><a href="home2.html"><i class="bi bi-house-door"></i> Home</a></li>
+        <li><a href="blog.html"><i class="bi bi-journal-text"></i> Blogs</a></li>
+        <li><a href="challenges.html"><i class="bi bi-flag"></i> Challenges</a></li>
+        <li><a href="leaderboard.html"><i class="bi bi-trophy"></i> Leaderboard</a></li>
+        <li><a href="resources.html"><i class="bi bi-book"></i> Resources</a></li>
+        <li><a class="active" href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+      </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- PROFILE HEADER -->
+    <div class="d-flex flex-column flex-lg-row align-items-start gap-4">
+
+      <!-- LEFT: Profile Avatar + Bio -->
+      <div class="profile-section">
+        <div class="profile-logo-card text-center">
+          <img src="https://i.ibb.co/5T0QzBk/profile-avatar.png" alt="Profile Avatar" class="profile-avatar">
+          <h4 class="profile-name mt-2">Shraddha Gupta</h4>
+          <p id="bioText" class="profile-bio">JIT Student</p>
+          <button id="editBioBtn" class="btn btn-outline-primary btn-sm mt-2">Edit Bio</button>
+          <div id="bioEditor" class="mt-2" style="display:none">
+            <textarea id="bioInput" class="form-control mb-2" rows="3" placeholder="Write your bio..."></textarea>
+            <button id="saveBioBtn" class="btn btn-primary btn-sm me-2">Save</button>
+            <button id="cancelBioBtn" class="btn btn-outline-secondary btn-sm">Cancel</button>
+          </div>
+
+          <!-- Profile Completion Progress -->
+          <div class="mt-3">
+            <h6>Profile Completion</h6>
+            <div class="progress">
+              <div id="profileCompletionBar" class="progress-bar" role="progressbar" style="width: 50%"></div>
+            </div>
+            <small id="profileCompletionText">50% complete</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Dropdown + Cards -->
+      <div class="dashboard-section flex-grow-1">
+
+        <!-- Profile Dropdown -->
+        <div class="d-flex justify-content-end mb-3">
+          <div class="dropdown">
+            <img src="https://i.ibb.co/5T0QzBk/profile-avatar.png" class="profile-avatar dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+              <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+              <li><a class="dropdown-item" href="notifications.html">Notifications</a></li>
+              <li><a class="dropdown-item" href="write-blog.html">Write Blog</a></li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Streak Card -->
+        <div class="dashboard-card mb-3 text-center">
+          <img src="https://i.ibb.co/5vR8k2S/streak.png" alt="Streak Image" class="mb-2" style="width:100px">
+          <h5>Streak</h5>
+          <div class="streak-number">12</div>
+          <div class="d-flex justify-content-between mt-2 days">
+            <span>Sun</span><span>Mon</span><span>Tue</span>
+            <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+        </div>
+
+        <!-- Badges Card -->
+        <div class="dashboard-card mb-3 text-center">
+          <img src="https://i.ibb.co/q1w3rWZ/badges.png" alt="Badges Image" class="mb-2" style="width:100px">
+          <h5>Badges</h5>
+          <div class="info-card mb-2">Top Contributor</div>
+          <div class="info-card mb-2">Quick Learner</div>
+          <div class="info-card">Community Helper</div>
+        </div>
+
+        <!-- Leaderboard Card -->
+        <div class="dashboard-card mb-3">
+          <img src="https://i.ibb.co/Tr9KkRJ/leaderboard.png" alt="Leaderboard Image" class="mb-2" style="width:100%">
+          <h5>Leaderboard</h5>
+          <ol class="list-group list-group-numbered mt-2">
+            <li class="list-group-item d-flex justify-content-between align-items-center">Alice <span>980 pts</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Bob <span>870 pts</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Charlie <span>820 pts</span></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">Shraddha <span>800 pts</span></li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <script src="js/profile.js"></script>
+  <script src="js/theme.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const editBtn = document.getElementById('editBioBtn');
+    const bioEditor = document.getElementById('bioEditor');
+    const bioText = document.getElementById('bioText');
+    const saveBtn = document.getElementById('saveBioBtn');
+    const cancelBtn = document.getElementById('cancelBioBtn');
+    const bioInput = document.getElementById('bioInput');
+
+    editBtn.addEventListener('click', () => {
+      bioEditor.style.display = 'block';
+      editBtn.style.display = 'none';
+      bioInput.value = bioText.textContent;
+    });
+
+    saveBtn.addEventListener('click', () => {
+      bioText.textContent = bioInput.value;
+      bioEditor.style.display = 'none';
+      editBtn.style.display = 'block';
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      bioEditor.style.display = 'none';
+      editBtn.style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
