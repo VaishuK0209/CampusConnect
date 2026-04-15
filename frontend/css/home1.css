@@ -1,0 +1,172 @@
+/* ------------------------------------
+   GLOBAL STYLE
+------------------------------------- */
+:root {
+    --primary: #4C6FFF;
+    --secondary: #1a2b4c;
+    --text-muted: #6a7a90;
+    --bg-light: #f5f7ff;
+    --radius: 18px;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: var(--bg-light);
+    overflow-x: hidden;
+}
+
+/* Smooth scroll animations */
+section {
+    animation: fadeSlideUp 1s ease forwards;
+    opacity: 0;
+}
+section:nth-child(2) { animation-delay: 0.2s; }
+section:nth-child(3) { animation-delay: 0.4s; }
+section:nth-child(4) { animation-delay: 0.6s; }
+
+/* Fade + Slide animation */
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------------
+   NAVBAR
+------------------------------------- */
+
+.navbar {
+    backdrop-filter: blur(12px);
+    background: var(--navbar-bg) !important;
+    border-bottom-color: var(--border);
+}
+
+.nav-btn {
+    padding: 8px 20px;
+    border-radius: var(--radius);
+    transition: 0.3s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ------------------------------------
+   HERO SECTION
+------------------------------------- */
+
+.hero-title {
+    font-size: 58px;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--primary), var(--primary-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.btn-primary-custom {
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    padding: 12px 34px;
+    border-radius: var(--radius);
+    font-size: 18px;
+    border: none;
+    color: #fff;
+    transition: 0.3s ease;
+    box-shadow: 0 8px 20px var(--primary-shadow);
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px var(--primary-shadow);
+}
+
+.illustration {
+    width: 90%;
+    filter: drop-shadow(0 10px 25px rgba(0,0,0,0.15));
+    transition: 0.4s ease;
+}
+
+.illustration:hover {
+    transform: scale(1.05);
+}
+
+/* ------------------------------------
+   SECTION TITLES
+------------------------------------- */
+.section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* ------------------------------------
+   CARDS (Features, Categories, Testimonials)
+------------------------------------- */
+
+.feature-card,
+.category-card,
+.testimonial-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 28px;
+    transition: 0.35s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    transform-style: preserve-3d;
+}
+
+.feature-card:hover,
+.category-card:hover,
+.testimonial-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.15);
+}
+
+/* Card icon hover pulse */
+.feature-card img,
+.category-card img {
+    transition: 0.3s ease;
+}
+.feature-card:hover img,
+.category-card:hover img {
+    transform: scale(1.15);
+}
+
+/* ------------------------------------
+   TESTIMONIALS
+------------------------------------- */
+
+.testimonial-card img {
+    border: 3px solid var(--primary);
+    padding: 3px;
+    box-shadow: 0 8px 22px var(--primary-shadow);
+    transition: 0.35s ease;
+}
+
+.testimonial-card:hover img {
+    transform: scale(1.15) rotate(3deg);
+}
+
+/* ------------------------------------
+   FOOTER
+------------------------------------- */
+footer {
+    background: var(--footer-bg);
+    border-top-color: var(--border);
+}
+
+footer p {
+    color: var(--text);
+    letter-spacing: 0.5px;
+}
